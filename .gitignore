@@ -1,6 +1,8 @@
 .idea
 *.imp
-target
 *.iws
 *.iml
 *.ipr
+target
+.DS_Store
+*.DS_Store

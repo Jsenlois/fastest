@@ -9,4 +9,8 @@ public class EmptyNetServvice implements NetService {
     public void send(byte[] data) {
         System.out.println("empty send");
     }
+
+    public void send(byte[] data, int start, int size) {
+        System.out.println("empty send");
+    }
 }

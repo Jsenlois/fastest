@@ -14,7 +14,8 @@ public class BioDataServerServiceImpl implements DataServerService {
 
     private Socket socket;
     private ServerSocket serverSocket = null;
-    private static final int READ_SIZE = 1024 * 1024;
+    private static final int READ_SIZE = 50 * 1024 * 1024;
+    private static final int READ_CACHE_SIZE = 50 * 1024 * 1024;
 
     public BioDataServerServiceImpl(String ip, int port) {
         try {
@@ -47,11 +48,12 @@ public class BioDataServerServiceImpl implements DataServerService {
         } catch (IOException e) {
             throw new RuntimeException("Server无法读取数据....", e);
         }
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream,READ_CACHE_SIZE);
         int len;
         byte[] data = new byte[READ_SIZE];
         try {
             while ((len = bufferedInputStream.read(data)) != -1) {
+                System.out.println("net read size:"+len);
                 operateService.doIt(data, 0, len);
             }
         } catch (IOException e) {

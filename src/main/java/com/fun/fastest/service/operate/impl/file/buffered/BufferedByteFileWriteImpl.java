@@ -11,10 +11,12 @@ public class BufferedByteFileWriteImpl implements OperateService {
 
     private BufferedOutputStream bufferedOutputStream;
 
+    private static final int WRITE_CACHE_SIZE = 50 * 1024 * 1024;
+
     public BufferedByteFileWriteImpl(String filePath) {
         try {
             bufferedOutputStream = new BufferedOutputStream(
-                    new FileOutputStream(filePath)
+                    new FileOutputStream(filePath),WRITE_CACHE_SIZE
             );
         } catch (FileNotFoundException e) {
             throw new RuntimeException("文件找不到...",e);
@@ -27,6 +29,7 @@ public class BufferedByteFileWriteImpl implements OperateService {
 
     public void doIt(byte[] data, int start, int size) {
         try {
+            System.out.println("file write size:"+size);
             bufferedOutputStream.write(data,start,size);
         } catch (IOException e) {
             throw new RuntimeException("文件写入失败...",e);

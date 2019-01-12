@@ -10,7 +10,7 @@ import java.net.Socket;
 public class BioSendServiceImpl implements OperateService {
 
     private BufferedOutputStream bufferedOutputStream;
-
+    private static final int WRITE_CACHE_SIZE = 50 * 1024 * 1024 ;
     public BioSendServiceImpl(String ip,int port) {
         Socket socket = new Socket();
         try {
@@ -20,7 +20,7 @@ public class BioSendServiceImpl implements OperateService {
             throw new RuntimeException("连接失败...",e);
         }
         try {
-            bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
+            bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream(),WRITE_CACHE_SIZE);
         } catch (IOException e) {
             throw new RuntimeException("无法获取输出流...",e);
         }
@@ -32,6 +32,7 @@ public class BioSendServiceImpl implements OperateService {
 
     public void doIt(byte[] data, int start, int size) {
         try {
+            System.out.println("net write size:"+size);
             bufferedOutputStream.write(data,start,size);
         } catch (IOException e) {
             throw new RuntimeException("写入数据失败了...",e);

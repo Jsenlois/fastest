@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class BufferedByteFileReadImpl implements DataReadService {
 
-    private static final int BUFFER_SIZE = 1024 * 1024;
-    private static final int READ_BUFFER_SIZE = 1024 * 1024;
+    private static final int BUFFER_SIZE = 50 * 1024 * 1024;
+    private static final int READ_BUFFER_SIZE = 50 * 1024 * 1024;
 
     public void read(String path, OperateService operateService) {
         long begin = System.currentTimeMillis();
@@ -25,6 +25,7 @@ public class BufferedByteFileReadImpl implements DataReadService {
         int len = 0 ;
         try {
             while ((len = inputStream.read(data)) != -1) {
+                System.out.println("file read len:"+len);
                 operateService.doIt(data, 0, len);
             }
             operateService.finish();

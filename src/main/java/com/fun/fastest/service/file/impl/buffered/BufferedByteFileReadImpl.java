@@ -31,6 +31,7 @@ public class BufferedByteFileReadImpl implements DataReadService {
                 System.out.println("BufferedByteFileReadImpl read len:"+len);
                 operateService.doIt(data, 0, len);
             }
+            operateService.finish();
         } catch (IOException e) {
             System.out.println("出错了IOException");
             e.printStackTrace();
@@ -40,6 +41,11 @@ public class BufferedByteFileReadImpl implements DataReadService {
             e.printStackTrace();
             return;
         }
-        System.out.println((System.currentTimeMillis() - begin) / 1000);
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException("文件流关闭失败",e);
+        }
+        System.out.println("read and send finish"+(System.currentTimeMillis() - begin) / 1000);
     }
 }

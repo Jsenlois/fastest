@@ -21,7 +21,6 @@ public class BioSendServiceImpl implements OperateService {
         }
         try {
             bufferedOutputStream = new BufferedOutputStream(socket.getOutputStream());
-            System.out.println("BioSendServiceImpl prepare to write");
         } catch (IOException e) {
             throw new RuntimeException("无法获取输出流...",e);
         }
@@ -33,13 +32,11 @@ public class BioSendServiceImpl implements OperateService {
 
     public void doIt(byte[] data, int start, int size) {
         try {
-            System.out.println("BioSendServiceImpl write start:"+start+"size:"+size);
             bufferedOutputStream.write(data,start,size);
         } catch (IOException e) {
             throw new RuntimeException("写入数据失败了...",e);
         }
         try {
-            System.out.println("BioSendServiceImpl flush");
             bufferedOutputStream.flush();
         } catch (IOException e) {
             throw new RuntimeException("Flush数据失败了...",e);

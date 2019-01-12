@@ -16,7 +16,6 @@ public class BufferedByteFileWriteImpl implements OperateService {
             bufferedOutputStream = new BufferedOutputStream(
                     new FileOutputStream(filePath)
             );
-            System.out.println("BufferedByteFileWriteImpl prepare to write");
         } catch (FileNotFoundException e) {
             throw new RuntimeException("文件找不到...",e);
         }
@@ -28,13 +27,11 @@ public class BufferedByteFileWriteImpl implements OperateService {
 
     public void doIt(byte[] data, int start, int size) {
         try {
-            System.out.println("BufferedByteFileWriteImpl write start:"+start+",size:"+size);
             bufferedOutputStream.write(data,start,size);
         } catch (IOException e) {
             throw new RuntimeException("文件写入失败...",e);
         }
         try {
-            System.out.println("BufferedByteFileWriteImpl flush");
             bufferedOutputStream.flush();
         } catch (IOException e) {
             throw new RuntimeException("文件数据Flush失败...",e);

@@ -56,6 +56,7 @@ public class BioDataServerServiceImpl implements DataServerService {
                 System.out.println("net read size:"+len);
                 operateService.doIt(data, 0, len);
             }
+            operateService.finish();
         } catch (IOException e) {
             throw new RuntimeException("Server读取数据失败了....", e);
         }
@@ -64,6 +65,6 @@ public class BioDataServerServiceImpl implements DataServerService {
         } catch (IOException e) {
             throw new RuntimeException("Server 流关闭失败",e);
         }
-        System.out.println("receive and write finish:"+(System.currentTimeMillis()-begin)/1000);
+        System.out.println("receive finish:"+(System.currentTimeMillis()-begin)/1000);
     }
 }

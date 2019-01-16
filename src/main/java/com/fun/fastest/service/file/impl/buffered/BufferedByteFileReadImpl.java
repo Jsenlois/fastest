@@ -25,7 +25,6 @@ public class BufferedByteFileReadImpl implements DataReadService {
         int len = 0 ;
         try {
             while ((len = inputStream.read(data)) != -1) {
-                System.out.println("file read len:"+len);
                 operateService.doIt(data, 0, len);
             }
             operateService.finish();

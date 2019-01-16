@@ -13,6 +13,8 @@ public class BufferedByteFileWriteImpl implements OperateService {
 
     private static final int WRITE_CACHE_SIZE = 50 * 1024 * 1024;
 
+    private long sum = 0;
+
     public BufferedByteFileWriteImpl(String filePath) {
         try {
             bufferedOutputStream = new BufferedOutputStream(
@@ -29,8 +31,9 @@ public class BufferedByteFileWriteImpl implements OperateService {
 
     public void doIt(byte[] data, int start, int size) {
         try {
-            System.out.println("file write size:"+size);
+            sum += size;
             bufferedOutputStream.write(data,start,size);
+            System.out.println("写文件 sum:"+sum);
         } catch (IOException e) {
             throw new RuntimeException("文件写入失败...",e);
         }
